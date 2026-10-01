@@ -1,0 +1,49 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: contact-service
+  config:
+    import: "optional:configserver:${CONFIG_SERVER_URI:http://localhost:8888}"
+
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3307/contact_db}
+    username: ${DB_USERNAME:app_user}
+    password: ${DB_PASSWORD:app_password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka/}
+  instance:
+    prefer-ip-address: true
+
+app:
+  jwt:
+    # Must match user-service's secret exactly — same signing key verifies the token.
+    secret: ${JWT_SECRET:dev-only-secret-key-change-this-before-any-real-deployment-1234567890}
+  internal-api:
+    # Shared secret for trusted service-to-service calls (e.g. notification-service).
+    # Not a user credential — never exposed through the Gateway's public routes.
+    key: ${INTERNAL_API_KEY:dev-only-internal-key-change-this-before-any-real-deployment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always

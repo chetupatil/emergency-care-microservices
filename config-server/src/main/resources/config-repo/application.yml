@@ -1,0 +1,14 @@
+# Shared defaults served to every client of the Config Server.
+# Service-specific overrides go in <service-name>.yml in this same folder.
+eureka:
+  client:
+    service-url:
+      defaultZone: http://discovery-server:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
