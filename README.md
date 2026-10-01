@@ -1,4 +1,4 @@
-# Health Emergency App — Infra + Step 1 & 2
+# Health Emergency App 
 
 This is the first slice of the build: infrastructure (MySQL, Kafka, Zookeeper) plus
 the three platform services (Config Server, Eureka, API Gateway). No business
